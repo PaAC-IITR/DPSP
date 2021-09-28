@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Double pulsar simulatoion
+    </title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script type="text/javascript" src="js/dat.gui.min.js"></script>
+    <script>
+        var scene, camera, renderer;
+        var cone1, cone2, cone3, cone4, s1, s2, g1, g2;
+        var s1p,s2p,dt = 100000;
+        var s1mass = 2e30;
+        var s2mass = 1e30;
+        var rot1 = 0.05;
+        var rot2 = 0.05;
+
+        init();
+        animate();
+
+        function init() {
+            //Camera, scene, and renderer
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1e24);
+            // scene.add(camera);
+            camera.position.set(0, 0, 3e11);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            //Orbit Controls
+            var orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+
+            // //Adding a starfield
+            // var starGeometry = new THREE.SphereGeometry(window.innerHeight, 64, 32);
+            // var starMaterial = new THREE.MeshPhongMaterial({
+            //     map: new THREE.ImageUtils.loadTexture("images/galaxy_starfield.png"),
+            //     side: THREE.DoubleSide,
+            //     shininess: 5
+            // });
+            // var starField = new THREE.Mesh(starGeometry, starMaterial);
+            // scene.add(starField);
+
+            //Create a new ambient light
+            var light = new THREE.AmbientLight(0x888888)
+            scene.add(light)
+
+            //Create a new directional light
+            var light = new THREE.DirectionalLight(0xfdfcf0, 1)
+            light.position.set(20, 10, 20)
+            scene.add(light)
+
+            const conegeometry = new THREE.ConeGeometry(5e9, 8e10, 64, 1);
+            const conematerial = new THREE.MeshBasicMaterial({ color: 0xffcccc });
+
+
+            cone1 = new THREE.Mesh(conegeometry, conematerial);
+            cone1.position.set(0, -3e10, 0);
+            // scene.add(cone1);
+
+            cone2 = new THREE.Mesh(conegeometry, conematerial);
+            cone2.position.set(0, 3e10, 0);
+            cone2.rotation.z += 3.14;
+            // scene.add(cone2);
+
+            cone3 = new THREE.Mesh(conegeometry, conematerial);
+            cone3.position.set(0, -3e10, 0);
+
+            cone4 = new THREE.Mesh(conegeometry, conematerial);
+            cone4.position.set(0, 3e10, 0);
+            cone4.rotation.z += 3.14;
+
+
+
+            const geometry = new THREE.SphereGeometry(1e10, 64, 32);
+            const material = new THREE.MeshPhongMaterial({
+                map: new THREE.ImageUtils.loadTexture("glow.png"),
+                map: new THREE.ImageUtils.loadTexture("ring_noise.png"),
+                color: 0xFFFFFF,
+                specular: 0x333333,
+                shininess: 25
+            });
+
+            s1 = new THREE.Mesh(geometry, material);
+            s1.position.set(0, 0, 0);
+            // var s1mass = 2e30;
+            s1p = new THREE.Vector3(0, 0, -0.5e4);
+            s1p.x = s1p.x * s1mass;
+            s1p.y = s1p.y * s1mass;
+            s1p.z = s1p.z * s1mass;
+            // scene.add(s1);
+
+
+            s2 = new THREE.Mesh(geometry, material);
+            s2.position.set(0, 0, 0);
+            s2p = new THREE.Vector3(0, 0, 1.0e4);
+            // var s2mass = 1e30;
+            s2p.x = s2p.x * s2mass;
+            s2p.y = s2p.y * s2mass;
+            s2p.z = s2p.z * s2mass;
+            // scene.add(s2);
+
+            g1 = new THREE.Group();
+            g1.add(cone2);
+            g1.add(s1);
+            g1.add(cone1)
+            g1.rotation.z=0.4;
+            g1.position.set(-1e11, 0, 0);
+            scene.add(g1);
+
+
+
+
+
+            g2 = new THREE.Group();
+            g2.add(cone3);
+            g2.add(s2);
+            g2.add(cone4)
+            g2.position.set(1.5e11, 0, 0);
+            g2.rotation.z=0.4;
+            scene.add(g2);
+
+
+            displayGui();
+
+        }
+
+        function displayGui(){
+            var gui = new dat.GUI();
+            var speed=100;
+            var mspeed=1e30;
+            var rspeed=1e10;
+            var rotation=0.01
+
+            parameters= {
+                a:2e30,
+                b:1e30,
+                c:1e10,
+                d:1e10,
+                e:100000,
+                f:0.05,
+                g:0.05,
+            }
+
+            var m1=gui.add(parameters, 'a').min(1e25).max(1e35).step(mspeed).name('s1 mass');
+            var m2= gui.add(parameters, 'b').min(1e25).max(1e35).step(mspeed).name('s2 mass');
+            var r1= gui.add(parameters, 'c').min(1e9).max(1e11).step(rspeed).name('s1 radius');
+            var r2 = gui.add(parameters, 'd').min(1e9).max(1e11).step(rspeed).name('s2 radius');
+            var tym = gui.add(parameters, 'e').min(10).max(100000000000).step(speed).name('Time');
+            var rotate1 = gui.add(parameters, 'f').min(0).max(2).step(rotation).name('omega1');
+            var rotate2 = gui.add(parameters, 'g').min(0).max(2).step(rotation).name('omega2');
+
+            m1.onChange(function(jar){ s1mass = jar;});
+            m2.onChange(function(jar){ s2mass = jar;});
+            r1.onChange(function(jar){ s1.radius = jar;});
+            r2.onChange(function(jar){ s2.radius = jar;});
+            tym.onChange(function(jar){ dt = jar;});
+            rotate1.onChange(function(jar){ rot1=jar; });
+            rotate2.onChange(function(jar){ rot2=jar; });
+
+
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            g1.rotation.x += rot1;
+            g2.rotation.x += rot2;
+            // g1.rotation.x += .05;
+            // g2.rotation.x += .05;
+
+            var rx = g2.position.x - g1.position.x;
+            var ry = g2.position.y - g1.position.y;
+            var rz = g2.position.z - g1.position.z;
+            var r = new THREE.Vector3(rx, ry, rz);
+
+            var rmag = g2.position.distanceTo(g1.position);
+
+            var f = new THREE.Vector3(0, 0, 0);
+            f.x = ((6.67e-11 * s1mass * s2mass) / (rmag ** 3)) * rx;
+            f.y = ((6.67e-11 * s1mass * s2mass) / (rmag ** 3)) * ry;
+            f.z = ((6.67e-11 * s1mass * s2mass) / (rmag ** 3)) * rz;
+
+            s1p.x = s1p.x + (f.x * dt);
+            s1p.y = s1p.y + (f.y * dt);
+            s1p.z = s1p.z + (f.z * dt);
+
+            s2p.x = s2p.x - (f.x * dt);
+            s2p.y = s2p.y - (f.y * dt);
+            s2p.z = s2p.z - (f.z * dt);
+
+            g1.position.x = g1.position.x + ((s1p.x / s1mass) * dt)
+            g1.position.y = g1.position.y + ((s1p.y / s1mass) * dt)
+            g1.position.z = g1.position.z + ((s1p.z / s1mass) * dt)
+
+            g2.position.x = g2.position.x + ((s2p.x / s2mass) * dt)
+            g2.position.y = g2.position.y + ((s2p.y / s2mass) * dt)
+            g2.position.z = g2.position.z + ((s2p.z / s2mass) * dt)
+
+            render();
+        }
+        
+
+        function render(){
+            renderer.clear();
+            renderer.render( scene, camera );
+        }
+
+
+        
+    </script>
+</body>
+
+</html>
