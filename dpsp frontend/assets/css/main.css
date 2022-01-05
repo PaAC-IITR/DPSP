@@ -99,11 +99,11 @@ input, select, textarea {
 	}
 
 	body {
-		background-color: #935d8c;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
+		background-color: #090707;
+		background-image: url("images/giphy.gif"), -moz-linear-gradient(45deg, #090405 15%, #2d2544 85%);
+		background-image: url("images/giphy.gif"), -webkit-linear-gradient(45deg, #bd00168e 15%, #002a46 85%);
+		background-image: url("images/giphy.gif"), -ms-linear-gradient(45deg, #3c3300 15%, #140050 85%);
+		background-image: url("images/giphy.gif"), linear-gradient(45deg, #5f0000 15%, #000054 85%);
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -120,8 +120,9 @@ input, select, textarea {
 /* Type */
 
 	body {
-		background-color: #935d8c;
-		color: rgba(255, 255, 255, 0.65);
+		 /*controlling the bursts giphy*/
+		background-size:contain;
+		background-repeat: no-repeat;
 	}
 
 	body, input, select, textarea {
@@ -144,13 +145,43 @@ input, select, textarea {
 			body, input, select, textarea {
 				font-size: 12pt;
 			}
+			#header.alt{
+				align-content: center;
+				margin: 0.5em 0.5em 1em 0.5em ;
+				padding: 0.25em;
+			}
 
 		}
+
+		@media screen and (max-width: 500px) {
+
+			body, input, select, textarea {
+				font-size: 12pt;
+				background-image: none;
+				background-color: #000000;
+				background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #090405 15%, #2d2544 85%);
+				background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #bd00168e 15%, #002a46 85%);
+				background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #3c3300 15%, #140050 85%);
+				background-image: url("images/overlay.png"), linear-gradient(45deg, #5f0000 15%, #00005474 85%);
+			}
+			#header.alt{
+				align-content: center;
+				margin: 0.5em 0.5em 1em 0.5em ;
+				padding: 0.25em;
+			}
+
+		}
+
 
 		@media screen and (max-width: 360px) {
 
 			body, input, select, textarea {
 				font-size: 11pt;
+				background-image: none; /* controlling the background in smaller devices*/
+			}
+			#header.alt{
+				align-content: center;
+				margin: 1.5em;
 			}
 
 		}
@@ -3075,7 +3106,7 @@ input, select, textarea {
 /* Header */
 
 	#header {
-		padding: 5em 5em 1em 5em ;
+		margin: 8em 5em 8em 5em ;
 		text-align: center;
 	}
 
@@ -3088,9 +3119,9 @@ input, select, textarea {
 			letter-spacing: -0.025em;
 		}
 
-		#header.alt {
-			padding: 7em 5em 4em 5em ;
-		}
+		/* #header.alt {
+			padding: 8em 8em 80em 8em;
+		} */
 
 			#header.alt h1 {
 				font-size: 3.25em;
@@ -3219,13 +3250,15 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		-ms-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
-		background-color: #ffffff;
-		color: #636363;
+		background-color: black;
+		color: black;
 		position: absolute;
 		width: 64em;
 		max-width: calc(100% - 4em);
+		
+		/**adding a gap to the top of nav bar*/
 		padding: 1em;
-		background-color: #f7f7f7;
+		background-color: #bababa; /*controlling the background color of the nav-bar*/
 		border-top-left-radius: 0.25em;
 		border-top-right-radius: 0.25em;
 		cursor: default;
