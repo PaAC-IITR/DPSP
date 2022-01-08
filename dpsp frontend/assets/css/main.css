@@ -99,11 +99,13 @@ input, select, textarea {
 	}
 
 	body {
-		background-color: #090707;
-		background-image: url("images/giphy.gif"), -moz-linear-gradient(45deg, #090405 15%, #2d2544 85%);
-		background-image: url("images/giphy.gif"), -webkit-linear-gradient(45deg, #bd00168e 15%, #002a46 85%);
+		background: linear-gradient(360deg, #068A9C 1.54%, #064E6D 27.08%, #063357 55.21%, #04142C 83.6%, #000000 99.44%);
+		/* transform: matrix(-1, 0, 0, 1, 0, 0); */
+		/* background-color: #090707; */
+		/* background-image: url("images/giphy.gif"), -moz-linear-gradient(45deg, #090405 15%, #07060a 85%);
+		background-image: url("images/giphy.gif"), -webkit-linear-gradient(45deg, #6f08148e 15%, #002a46 85%);
 		background-image: url("images/giphy.gif"), -ms-linear-gradient(45deg, #3c3300 15%, #140050 85%);
-		background-image: url("images/giphy.gif"), linear-gradient(45deg, #5f0000 15%, #000054 85%);
+		background-image: url("images/giphy.gif"), linear-gradient(45deg, #5f0000 15%, #000054 85%); */
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -3258,7 +3260,7 @@ input, select, textarea {
 		
 		/**adding a gap to the top of nav bar*/
 		padding: 1em;
-		background-color: #bababa; /*controlling the background color of the nav-bar*/
+		background: linear-gradient(360deg, rgba(10, 149, 168, 0.5) 1.54%, rgba(4, 100, 141, 0.5) 47.92%, rgba(7, 57, 98, 0.5) 100%);
 		border-top-left-radius: 0.25em;
 		border-top-right-radius: 0.25em;
 		cursor: default;
@@ -3267,10 +3269,10 @@ input, select, textarea {
 
 		#nav input, #nav select, #nav textarea {
 			color: #636363;
-		}
+			}
 
 		#nav a:hover {
-			color: #636363;
+			color: #000000; /*hover text color*/
 		}
 
 		#nav strong, #nav b {
@@ -3330,7 +3332,7 @@ input, select, textarea {
 				}
 
 					#nav ul li a:hover {
-						background-color: rgba(222, 222, 222, 0.25);
+						background-color: rgb(255, 208, 147); /*hover color of the nav*/
 					}
 
 					#nav ul li a.active {
