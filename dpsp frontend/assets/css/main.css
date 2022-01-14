@@ -18,6 +18,7 @@ tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
 footer, header, hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
+	/* scroll-behavior: smooth; */
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -161,10 +162,10 @@ input, select, textarea {
 				font-size: 12pt;
 				background-image: none;
 				background-color: #000000;
-				background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #090405 15%, #2d2544 85%);
-				background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #bd00168e 15%, #002a46 85%);
-				background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #3c3300 15%, #140050 85%);
-				background-image: url("images/overlay.png"), linear-gradient(45deg, #5f0000 15%, #00005474 85%);
+				background-image: url("images/overlay.png"), -moz-linear-gradient(360deg, #068A9C 1.54%, #064E6D 27.08%, #063357 55.21%, #04142C 83.6%, #000000 99.44%);
+				background-image: url("images/overlay.png"), -webkit-linear-gradient(360deg, #068A9C 1.54%, #064E6D 27.08%, #063357 55.21%, #04142C 83.6%, #000000 99.44%);
+				background-image: url("images/overlay.png"), -ms-linear-gradient(360deg, #068A9C 1.54%, #064E6D 27.08%, #063357 55.21%, #04142C 83.6%, #000000 99.44%);
+				background-image: url("images/overlay.png"), linear-gradient(360deg, #068A9C 1.54%, #064E6D 27.08%, #063357 55.21%, #04142C 83.6%, #000000 99.44%);
 			}
 			#header.alt{
 				align-content: center;
@@ -2405,8 +2406,8 @@ input, select, textarea {
 	.image img {
 		border-radius: 50%;
 		display: inline-block;
-		width: 150px;
-		height: 150px;
+		width: 120px;
+		height: 120px;
 		object-fit: cover;
 	}
 
@@ -2871,7 +2872,7 @@ input, select, textarea {
 			}
 
 				.features li:nth-child(3) {
-					margin-top: 3em;
+					margin-top: 2em;
 				}
 
 		}
@@ -2884,14 +2885,14 @@ input, select, textarea {
 			}
 
 				.features li {
-					width: 100%;
+					width: 50%;
 					margin-left: 0;
 					margin-top: 2em;
 				}
 
-					.features li:nth-child(2), .features li:nth-child(3) {
+					/* .features li:nth-child(2), .features li:nth-child(3) {
 						margin-top: 2em;
-					}
+					} */
 
 		}
 
@@ -3733,6 +3734,7 @@ input, select, textarea {
 		width: calc(100% + 2em);
 		margin: 0 0 3em -2em;
 	}
+
 
 		#footer > * {
 			width: calc(50% - 2em);
